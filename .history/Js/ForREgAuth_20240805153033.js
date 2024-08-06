@@ -18,5 +18,5 @@ function toggleForms() {
   }
   
   function goBack() {
-    window.location.href = 'index.html'; 
+    window.location.href = '/'; // Здесь укажите URL главной страницы или другую нужную вам страницу
   }
