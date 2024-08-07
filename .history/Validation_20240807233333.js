@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!regex.test(value)) {
         loginPasswordInput.classList.add('invalid');
         loginPasswordInput.classList.remove('valid');
-        messages.push('Неверный пароль');
+        messages.push('Пароль должен содержать минимум 8 символов, включая одну заглавную букву, одну строчную букву и одну цифру.');
       } else {
         loginPasswordInput.classList.remove('invalid');
         loginPasswordInput.classList.add('valid');
