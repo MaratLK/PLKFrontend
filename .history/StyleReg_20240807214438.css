@@ -87,7 +87,7 @@ body {
   color: #0056b3;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text", "email", "password"] {
   font-family: 'Exo 2', sans-serif;
   font-size: 16px;
   color: #333;
@@ -98,20 +98,8 @@ input[type="text"], input[type="email"], input[type="password"] {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 10px;
-  border: 1px solid #ccc; /* добавлено для изменения границы */
 }
 
-input[type="text"].invalid, input[type="email"].invalid, input[type="password"].invalid {
-  border-color: red;
-}
-
-input[type="text"].valid, input[type="email"].valid, input[type="password"].valid {
-  border-color: green;
-}
-
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-bottom: 10px;
-  display: none;
+input[type="text", "email", "password"]::placeholder {
+  color: #999;
 }

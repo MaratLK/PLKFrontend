@@ -98,15 +98,10 @@ input[type="text"], input[type="email"], input[type="password"] {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 10px;
-  border: 1px solid #ccc; /* добавлено для изменения границы */
 }
 
-input[type="text"].invalid, input[type="email"].invalid, input[type="password"].invalid {
-  border-color: red;
-}
-
-input[type="text"].valid, input[type="email"].valid, input[type="password"].valid {
-  border-color: green;
+input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder {
+  color: #999;
 }
 
 .error-message {
@@ -114,4 +109,12 @@ input[type="text"].valid, input[type="email"].valid, input[type="password"].vali
   font-size: 12px;
   margin-bottom: 10px;
   display: none;
+}
+
+input.invalid {
+  border-color: red;
+}
+
+input.valid {
+  border-color: green;
 }
