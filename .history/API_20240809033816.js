@@ -16,22 +16,16 @@ async function login() {
       body: JSON.stringify(user)
     });
 
-    console.log('Response:', response); // Вывод ответа в консоль
-
     if (response.ok) {
       const result = await response.json();
-      console.log('Result:', result); // Вывод результата в консоль
       localStorage.setItem('token', result.Token);
       localStorage.setItem('user', JSON.stringify(result.User));
       updateUserInterface(result.User);
     } else {
-      const errorText = await response.text();
-      console.error('Error logging in:', response.status, errorText); // Вывод статуса и текста ошибки
-      alert('Login failed: ' + errorText); // Показ ошибки пользователю
+      console.error('Error logging in:', response.statusText);
     }
   } catch (error) {
     console.error('Error:', error);
-    alert('Login failed: ' + error.message); // Показ ошибки пользователю
   }
 }
 
