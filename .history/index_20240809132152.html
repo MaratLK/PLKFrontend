@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
     <body>
+        <div id="loginMessage" style="display: none;"></div>
         <header>
             <div class="logo">
                 <img src="img_prj/RealLogo.png" alt="Логотип ПЛК Транзит">
@@ -171,26 +172,6 @@
                 <p class="roadp"><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
             </div>
         </footer>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const loginButton = document.getElementById('loginButton');
-        
-                if (loginButton) {
-                    const user = JSON.parse(localStorage.getItem('user'));
-                    if (user) {
-                        loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
-                        loginButton.href = "#";
-                        loginButton.onclick = () => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('user');
-                            window.location.reload();
-                        };
-                    }
-                }
-            });
-        </script>
-        
 
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>

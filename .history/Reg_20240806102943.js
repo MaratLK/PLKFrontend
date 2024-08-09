@@ -7,6 +7,16 @@ function toggleForms() {
         : "scale(1.1)";
   }
   
+  function register() {
+    // Логика регистрации
+    alert("Регистрация успешно выполнена!");
+  }
+  
+  function login() {
+    // Логика авторизации
+    alert("Авторизация успешна!");
+  }
+  
   function goBack() {
     window.location.href = 'index.html'; 
   }

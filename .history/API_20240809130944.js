@@ -1,4 +1,3 @@
-// Функция для отправки данных авторизации на сервер
 async function login() {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
@@ -30,14 +29,8 @@ async function login() {
               localStorage.setItem('user', JSON.stringify(result.user));
               console.log('User data saved:', result.user);
               updateUserInterface(result.user);
-
-              // Показать сообщение о успешном входе
-              showLoginMessage(result.user.firstName);
-
-              // Перенаправление на главную страницу после задержки
-              setTimeout(() => {
-                  window.location.href = 'index.html';
-              }, 2000); // Задержка 2 секунды перед перенаправлением
+              // Перенаправление на главную страницу
+              window.location.href = 'index.html';
           } else {
               console.error('User data is missing in response');
               alert('Login failed: No user data received.');
@@ -50,36 +43,6 @@ async function login() {
   } catch (error) {
       console.error('Error:', error);
       alert('Login failed: ' + error.message); // Показ ошибки пользователю
-  }
-}
-
-// Функция для отображения сообщения о успешном входе
-function showLoginMessage(userName) {
-  const loginMessage = document.getElementById('loginMessage');
-  if (loginMessage) {
-      loginMessage.textContent = `Вы успешно вошли как ${userName}`;
-      loginMessage.style.display = 'block';
-      loginMessage.style.color = 'green';
-  }
-}
-
-// Функция для обновления интерфейса в зависимости от состояния пользователя
-function updateUserInterface(user) {
-  const loginButton = document.getElementById('loginButton');
-  
-  if (!loginButton) {
-      console.error('Login button not found');
-      return; // Прекратить выполнение функции, если элемент не найден
-  }
-
-  if (user) {
-      loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
-      loginButton.href = "#";
-      loginButton.onclick = logout;
-  } else {
-      loginButton.innerHTML = `<i class="fas fa-user"></i> Войти`;
-      loginButton.href = "LogReg.html";
-      loginButton.onclick = null;
   }
 }
 

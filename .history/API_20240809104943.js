@@ -1,3 +1,15 @@
+// Обработчик DOMContentLoaded для обновления интерфейса при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+  const loginButton = document.getElementById('loginButton');
+  
+  if (loginButton) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      updateUserInterface(user);
+  } else {
+      console.log('Login button not found on this page. Skipping updateUserInterface.');
+  }
+});
+
 // Функция для отправки данных авторизации на сервер
 async function login() {
   const email = document.getElementById('loginEmail').value;
@@ -18,30 +30,13 @@ async function login() {
       });
 
       console.log('Response:', response); // Вывод ответа в консоль
-      console.log('Response status:', response.status);
 
       if (response.ok) {
           const result = await response.json();
           console.log('Result:', result); // Вывод результата в консоль
-
-          // Проверка, что result.User содержит данные
-          if (result.user) {
-              localStorage.setItem('token', result.token);
-              localStorage.setItem('user', JSON.stringify(result.user));
-              console.log('User data saved:', result.user);
-              updateUserInterface(result.user);
-
-              // Показать сообщение о успешном входе
-              showLoginMessage(result.user.firstName);
-
-              // Перенаправление на главную страницу после задержки
-              setTimeout(() => {
-                  window.location.href = 'index.html';
-              }, 2000); // Задержка 2 секунды перед перенаправлением
-          } else {
-              console.error('User data is missing in response');
-              alert('Login failed: No user data received.');
-          }
+          localStorage.setItem('token', result.Token);
+          localStorage.setItem('user', JSON.stringify(result.User));
+          updateUserInterface(result.User);
       } else {
           const errorText = await response.text();
           console.error('Error logging in:', response.status, errorText); // Вывод статуса и текста ошибки
@@ -50,36 +45,6 @@ async function login() {
   } catch (error) {
       console.error('Error:', error);
       alert('Login failed: ' + error.message); // Показ ошибки пользователю
-  }
-}
-
-// Функция для отображения сообщения о успешном входе
-function showLoginMessage(userName) {
-  const loginMessage = document.getElementById('loginMessage');
-  if (loginMessage) {
-      loginMessage.textContent = `Вы успешно вошли как ${userName}`;
-      loginMessage.style.display = 'block';
-      loginMessage.style.color = 'green';
-  }
-}
-
-// Функция для обновления интерфейса в зависимости от состояния пользователя
-function updateUserInterface(user) {
-  const loginButton = document.getElementById('loginButton');
-  
-  if (!loginButton) {
-      console.error('Login button not found');
-      return; // Прекратить выполнение функции, если элемент не найден
-  }
-
-  if (user) {
-      loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
-      loginButton.href = "#";
-      loginButton.onclick = logout;
-  } else {
-      loginButton.innerHTML = `<i class="fas fa-user"></i> Войти`;
-      loginButton.href = "LogReg.html";
-      loginButton.onclick = null;
   }
 }
 
@@ -170,20 +135,3 @@ function toggleForms() {
 function goBack() {
   window.location.href = 'index.html'; 
 }
-
-// Обработчик DOMContentLoaded для обновления интерфейса при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-  const loginButton = document.getElementById('loginButton');
-  
-  if (loginButton) {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-          console.log('Loaded user:', user);
-      } else {
-          console.log('No user data found in localStorage');
-      }
-      updateUserInterface(user);
-  } else {
-      console.log('Login button not found on this page. Skipping updateUserInterface.');
-  }
-});

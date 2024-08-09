@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
   textInputs.forEach(input => {
       input.addEventListener('input', function () {
           const value = input.value;
-          const regex = /^[a-zA-Z0-9\s,.()-]+$/;
+          const regex = /^[a-zA-Z0-9\s]+$/;  // Разрешены латинские буквы, цифры и пробелы
           const messages = [];
 
           if (!regex.test(value)) {

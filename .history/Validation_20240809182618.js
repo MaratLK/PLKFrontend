@@ -74,17 +74,19 @@ document.addEventListener('DOMContentLoaded', function () {
   textInputs.forEach(input => {
       input.addEventListener('input', function () {
           const value = input.value;
-          const regex = /^[a-zA-Z0-9\s,.()-]+$/;
+          const regex = /^[a-zA-Z0-9\s]+$/;  // Разрешены латинские буквы, цифры и пробелы
           const messages = [];
 
-          if (!regex.test(value)) {
-              input.classList.add('invalid');
-              input.classList.remove('valid');
-              messages.push('Только латинские буквы и цифры разрешены.');
-          } else {
-              input.classList.remove('invalid');
-              input.classList.add('valid');
-          }
+          if (input.length < 11) {
+            phoneNumberInput.classList.add('invalid');
+            phoneNumberInput.classList.remove('valid');
+            phoneNumberInput.setCustomValidity('Введите правильный 11-значный номер.');
+        } else {
+            phoneNumberInput.classList.remove('invalid');
+            phoneNumberInput.classList.add('valid');
+            phoneNumberInput.setCustomValidity('');
+        }
+        
 
           showErrorMessages(input, messages);
       });
