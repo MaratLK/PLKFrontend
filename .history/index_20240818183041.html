@@ -156,57 +156,30 @@
         </section>
 
         <section id="news" class="news">
-            <h2>Новости</h2>
-            <div class="news-container">
-                <div class="news-card">
-                    <h3>Заголовок новости 1</h3>
-                    <p>Краткое описание новости 1. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news1">Подробнее</button>
+            <h1>Новости</h1>
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide">
+                        <img src="path_to_your_image/image1.png" alt="Slide 1 Image" class="slide-image">
+                        <h1>Новости 1</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Slide 1 text.</p>
+                    </div>
+                    <div class="slide">
+                        <img src="path_to_your_image/image2.png" alt="Slide 2 Image" class="slide-image">
+                        <h1>Новости 2</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Slide 2 text.</p>
+                    </div>
+                    <div class="slide">
+                        <img src="path_to_your_image/image3.png" alt="Slide 3 Image" class="slide-image">
+                        <h1>Новости 3</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Slide 3 text.</p>
+                    </div>
                 </div>
-                <div class="news-card">
-                    <h3>Заголовок новости 2</h3>
-                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news2">Подробнее</button>
-                </div>
-                <div class="news-card">
-                    <h3>Заголовок новости 2</h3>
-                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news2">Подробнее</button>
-                </div>
-                <div class="news-card">
-                    <h3>Заголовок новости 2</h3>
-                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news2">Подробнее</button>
-                </div>
-                <div class="news-card">
-                    <h3>Заголовок новости 2</h3>
-                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news2">Подробнее</button>
-                </div>
-                <div class="news-card">
-                    <h3>Заголовок новости 2</h3>
-                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news2">Подробнее</button>
-                </div>
-
-                <div class="news-card">
-                    <h3>Заголовок новости 2</h3>
-                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
-                    <button class="open-modal" data-news="news2">Подробнее</button>
-                </div>
-                <!-- Добавьте больше новостей по необходимости -->
+                <button class="prev" onclick="prevSlide()">&#10094;</button>
+                <button class="next" onclick="nextSlide()">&#10095;</button>
             </div>
+            
         </section>
-        
-        <!-- Модальное окно -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="modal-body"></div>
-            </div>
-        </div>
-        
-        
         
 
         <footer id="contacts">
@@ -245,7 +218,7 @@
                 }
             });
         </script>
-        <script src="swipenews.js"></script>
+        
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>
         <script src="Js/ForAbout.js"></script>
