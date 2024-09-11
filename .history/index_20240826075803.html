@@ -158,8 +158,17 @@
 
         <section id="news" class="news">
             <h2>Новости</h2>
-            <div class="news-container">
-                <!-- Карточки новостей будут добавляться сюда -->
+            <div class="news-card">
+              <div class="news-header">
+                <h3>${title}</h3>
+                <span class="news-date">${new Date(date).toLocaleDateString("ru-RU", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}</span>
+              </div>
+              <p>${description.substring(0, 100)}...</p> <!-- Отображаем только первые 100 символов -->
+              <a href="${pageUrl}" class="read-more-btn">Подробнее</a>
             </div>
           </section>
       
@@ -188,7 +197,10 @@
               </form>
               
             </div>
-          </div>       
+          </div>
+        
+        
+        
 
         <footer id="contacts">
             <div class="footer-content">
@@ -208,27 +220,7 @@
             </div>
         </footer>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const loginButton = document.getElementById('loginButton');
-            
-                if (loginButton) {
-                    const user = JSON.parse(localStorage.getItem('user'));
-                    if (user) {
-                        loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
-                        loginButton.href = "#";
-                        loginButton.onclick = () => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('user');
-                            window.location.reload();
-                        };
-                    }
-                }
-            });
-        </script>
-        
-
-        <script src="createnews.js"></script>   
+        <script src="createnews.js"></script>
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>
         <script src="Js/ForAbout.js"></script>

@@ -208,26 +208,6 @@
             </div>
         </footer>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const loginButton = document.getElementById('loginButton');
-            
-                if (loginButton) {
-                    const user = JSON.parse(localStorage.getItem('user'));
-                    if (user) {
-                        loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
-                        loginButton.href = "#";
-                        loginButton.onclick = () => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('user');
-                            window.location.reload();
-                        };
-                    }
-                }
-            });
-        </script>
-        
-
         <script src="createnews.js"></script>   
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>

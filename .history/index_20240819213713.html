@@ -2,7 +2,6 @@
     <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ПЛК Транзит</title>
         <link rel="stylesheet" href="StyleMain.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -140,7 +139,7 @@
                 <i class="fas fa-users"></i>
                 <div class="stat-number" data-target="35">0</div>
                 <hr>
-                <p>Более 30 сотрудников</p>
+                <p>Штат из 35 сотрудников</p>
             </div>
             <div class="stat-item">
                 <i class="fas fa-box"></i>
@@ -158,37 +157,39 @@
 
         <section id="news" class="news">
             <h2>Новости</h2>
+            <button id="addNewsButton">Создать новость</button>
             <div class="news-container">
-                <!-- Карточки новостей будут добавляться сюда -->
-            </div>
-          </section>
-      
-          <!-- Кнопка для открытия модального окна -->
-          <button id="add-news-btn">Добавить новость</button>
-      
-          <!-- Модальное окно -->
-          <div id="news-modal" class="modal">
+                <div class="news-card" data-id="1">
+                    <div class="news-header">
+                        <h3>Заголовок новости 1</h3>
+                        <span class="news-date">18.08.2024</span>
+                    </div>
+                    <p>Краткое описание новости 1. Нажмите для подробностей.</p>
+                    <button class="open-modal" data-news="news1">Подробнее</button>
+                    <button class="delete-btn" data-id="1">Удалить</button>
+                </div>
+                <div class="news-card" data-id="2">
+                    <div class="news-header">
+                        <h3>Заголовок новости 2</h3>
+                        <span class="news-date">18.08.2024</span>
+                    </div>
+                    <p>Краткое описание новости 2. Нажмите для подробностей.</p>
+                    <button class="open-modal" data-news="news2">Подробнее</button>
+                    <button class="delete-btn" data-id="2">Удалить</button>
+                </div>
+        </section>
+        
+        
+        <!-- Модальное окно -->
+        <div id="modal" class="modal">
             <div class="modal-content">
-              <span class="close-btn">&times;</span>
-              <h3>Добавить новость</h3>
-              <form id="news-form">
-                <label for="news-title">Название:</label>
-                <input type="text" id="news-title" name="title" required />
-              
-                <label for="news-date">Дата:</label>  <!-- Добавлено поле даты -->
-                <input type="date" id="news-date" name="date" required />
-              
-                <label for="news-description">Описание:</label>
-                <textarea id="news-description" name="description" required></textarea>
-              
-                <label for="news-images">Загрузить изображения (до 5 штук):</label>
-                <input type="file" id="news-images" name="images" accept="image/*" multiple />
-              
-                <button type="submit">Добавить</button>
-              </form>
-              
+                <span class="close">&times;</span>
+                <div id="modal-body"></div>
             </div>
-          </div>       
+        </div>
+        
+        
+        
 
         <footer id="contacts">
             <div class="footer-content">
@@ -211,7 +212,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const loginButton = document.getElementById('loginButton');
-            
+        
                 if (loginButton) {
                     const user = JSON.parse(localStorage.getItem('user'));
                     if (user) {
@@ -226,9 +227,7 @@
                 }
             });
         </script>
-        
-
-        <script src="createnews.js"></script>   
+        <script src="swipenews.js"></script>
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>
         <script src="Js/ForAbout.js"></script>

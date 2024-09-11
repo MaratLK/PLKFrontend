@@ -64,30 +64,26 @@ function showLoginMessage(userName) {
 }
 
 // Функция для обновления интерфейса в зависимости от состояния пользователя
-// Функция для обновления интерфейса в зависимости от состояния пользователя
 function updateUserInterface(user) {
-    const loginButton = document.getElementById('loginButton');  // Селектор кнопки "Войти"
-    
-    if (!loginButton) {
-        console.error('Login button not found');
-        return;  // Прекратить выполнение функции, если элемент не найден
-    }
+  const loginButton = document.getElementById('loginButton');
+  
+  if (!loginButton) {
+      console.error('Login button not found');
+      return; // Прекратить выполнение функции, если элемент не найден
+  }
 
-    if (user) {
-        // Если пользователь найден, обновляем кнопку на имя пользователя
-        loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;  // Используем имя пользователя
-        loginButton.href = "#";  // При необходимости можно задать другой маршрут
-        loginButton.onclick = logout;  // Обрабатываем выход
-    } else {
-        // Если пользователь не найден, показываем стандартную кнопку входа
-        loginButton.innerHTML = `<i class="fas fa-user"></i> Войти`;
-        loginButton.href = "LogReg.html";  // Переход к форме входа
-        loginButton.onclick = null;  // Сброс обработчика выхода
-    }
+  if (user) {
+      loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
+      loginButton.href = "#";
+      loginButton.onclick = logout;
+  } else {
+      loginButton.innerHTML = `<i class="fas fa-user"></i> Войти`;
+      loginButton.href = "LogReg.html";
+      loginButton.onclick = null;
+  }
 }
 
-
-
+// Функция для отправки данных регистрации на сервер
 async function register() {
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
@@ -95,7 +91,7 @@ async function register() {
   const address = document.getElementById('address').value;
   const phoneNumber = document.getElementById('phoneNumber').value;
   const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;  // Правильное поле для пароля
+  const password = document.getElementById('password').value;
 
   const user = {
       firstName: firstName,
@@ -104,9 +100,9 @@ async function register() {
       address: address,
       phoneNumber: phoneNumber,
       email: email,
-      password: password  // Передаем чистый пароль
+      passwordHash: password // В вашем API этот параметр может быть назван иначе
   };
-
+  
   try {
       const response = await fetch('https://localhost:7268/api/Users/register', {
           method: 'POST',
@@ -116,30 +112,29 @@ async function register() {
           body: JSON.stringify(user)
       });
 
-      console.log('Response:', response);
+      console.log('Response:', response); // Вывод ответа в консоль
 
       if (response.ok) {
           alert('Регистрация успешна!');
+          // Переключаемся на форму авторизации
           toggleForms();
       } else {
           const errorText = await response.text();
-          console.error('Error registering:', response.status, errorText);
-          alert('Registration failed: ' + errorText);
+          console.error('Error registering:', response.status, errorText); // Вывод статуса и текста ошибки
+          alert('Registration failed: ' + errorText); // Показ ошибки пользователю
       }
   } catch (error) {
       console.error('Error:', error);
-      alert('Registration failed: ' + error.message);
+      alert('Registration failed: ' + error.message); // Показ ошибки пользователю
   }
 }
 
-
 // Функция для выхода пользователя
 function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    updateUserInterface(null);  // Сброс интерфейса на стандартный вид
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  updateUserInterface(null);
 }
-
 
 // Функция для обновления интерфейса в зависимости от состояния пользователя
 function updateUserInterface(user) {
@@ -176,19 +171,19 @@ function goBack() {
   window.location.href = 'index.html'; 
 }
 
+// Обработчик DOMContentLoaded для обновления интерфейса при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
-    const loginButton = document.getElementById('loginButton');  // Селектор кнопки "Войти"
-
-    if (loginButton) {
-        const user = JSON.parse(localStorage.getItem('user'));  // Проверяем, есть ли данные о пользователе в localStorage
-        if (user) {
-            console.log('Loaded user:', user);  // Если пользователь найден, выводим его данные в консоль
-            updateUserInterface(user);  // Обновляем интерфейс
-        } else {
-            console.log('No user data found in localStorage');
-            updateUserInterface(null);  // Если данных нет, сбрасываем интерфейс
-        }
-    } else {
-        console.log('Login button not found on this page. Skipping updateUserInterface.');
-    }
+  const loginButton = document.getElementById('loginButton');
+  
+  if (loginButton) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+          console.log('Loaded user:', user);
+      } else {
+          console.log('No user data found in localStorage');
+      }
+      updateUserInterface(user);
+  } else {
+      console.log('Login button not found on this page. Skipping updateUserInterface.');
+  }
 });

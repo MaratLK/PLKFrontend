@@ -158,9 +158,7 @@
 
         <section id="news" class="news">
             <h2>Новости</h2>
-            <div class="news-container">
-                <!-- Карточки новостей будут добавляться сюда -->
-            </div>
+
           </section>
       
           <!-- Кнопка для открытия модального окна -->
@@ -207,26 +205,6 @@
                 <p class="roadp"><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
             </div>
         </footer>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const loginButton = document.getElementById('loginButton');
-            
-                if (loginButton) {
-                    const user = JSON.parse(localStorage.getItem('user'));
-                    if (user) {
-                        loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
-                        loginButton.href = "#";
-                        loginButton.onclick = () => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('user');
-                            window.location.reload();
-                        };
-                    }
-                }
-            });
-        </script>
-        
 
         <script src="createnews.js"></script>   
         <script src="Js/slider.js"></script>

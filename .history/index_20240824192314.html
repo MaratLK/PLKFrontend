@@ -2,7 +2,6 @@
     <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ПЛК Транзит</title>
         <link rel="stylesheet" href="StyleMain.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -159,36 +158,24 @@
         <section id="news" class="news">
             <h2>Новости</h2>
             <div class="news-container">
-                <!-- Карточки новостей будут добавляться сюда -->
+                <!-- Сюда будут добавляться новые карточки -->
             </div>
-          </section>
-      
-          <!-- Кнопка для открытия модального окна -->
-          <button id="add-news-btn">Добавить новость</button>
-      
-          <!-- Модальное окно -->
-          <div id="news-modal" class="modal">
-            <div class="modal-content">
-              <span class="close-btn">&times;</span>
-              <h3>Добавить новость</h3>
-              <form id="news-form">
-                <label for="news-title">Название:</label>
-                <input type="text" id="news-title" name="title" required />
-              
-                <label for="news-date">Дата:</label>  <!-- Добавлено поле даты -->
-                <input type="date" id="news-date" name="date" required />
-              
-                <label for="news-description">Описание:</label>
-                <textarea id="news-description" name="description" required></textarea>
-              
-                <label for="news-images">Загрузить изображения (до 5 штук):</label>
-                <input type="file" id="news-images" name="images" accept="image/*" multiple />
-              
-                <button type="submit">Добавить</button>
-              </form>
-              
-            </div>
-          </div>       
+            <button id="add-news-btn">Добавить новость</button>
+        </section>
+    
+        <!-- Модальное окно для ввода данных новости -->
+        <div id="news-modal" class="modal">
+            <h3>Создать новость</h3>
+            <form id="news-form">
+                <input type="text" id="news-title" placeholder="Заголовок" required>
+                <textarea id="news-description" placeholder="Описание" required></textarea>
+                <input type="file" id="news-image" accept="image/*" multiple required>
+                <button type="submit">Создать новость</button>
+            </form>
+        </div>
+        
+        
+        
 
         <footer id="contacts">
             <div class="footer-content">
@@ -207,28 +194,112 @@
                 <p class="roadp"><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
             </div>
         </footer>
-
         <script>
             document.addEventListener('DOMContentLoaded', () => {
+                const newsContainer = document.querySelector('.news-container');
+                const addNewsBtn = document.getElementById('add-news-btn');
+                const newsModal = document.getElementById('news-modal');
+                const newsForm = document.getElementById('news-form');
                 const loginButton = document.getElementById('loginButton');
-            
-                if (loginButton) {
-                    const user = JSON.parse(localStorage.getItem('user'));
-                    if (user) {
+    
+                let cardIdCounter = 1;
+    
+                addNewsBtn.addEventListener('click', () => {
+                    newsModal.classList.add('show');
+                });
+    
+                newsForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+    
+                    const title = document.getElementById('news-title').value;
+                    const description = document.getElementById('news-description').value;
+                    const imageFiles = document.getElementById('news-image').files;
+                    const date = new Date().toLocaleDateString(); // Форматирование текущей даты
+    
+                    if (imageFiles.length > 0) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            createNewsCard(title, date, description, e.target.result, imageFiles.length);
+                        };
+                        reader.readAsDataURL(imageFiles[0]);
+                    }
+    
+                    newsModal.classList.remove('show');
+                    newsForm.reset();
+                });
+    
+                function createNewsCard(title, date, description, imageUrl, imageCount) {
+                    const card = document.createElement('div');
+                    card.classList.add('news-card');
+                    card.setAttribute('data-id', cardIdCounter);
+    
+                    card.innerHTML = `
+                        <div class="news-header">
+                            <h3>${title}</h3>
+                            <span class="news-date">${date}</span>
+                        </div>
+                        <img src="${imageUrl}" alt="News Image">
+                        <p>${description}</p>
+                        <button class="delete-btn" data-id="${cardIdCounter}">Удалить</button>
+                        <button class="details-btn" data-id="${cardIdCounter}">Перейти</button>
+                    `;
+    
+                    if (imageCount > 1) {
+                        // Добавляем информацию о дополнительных изображениях
+                        const additionalImages = document.createElement('p');
+                        additionalImages.textContent = `+ еще ${imageCount - 1} изображений`;
+                        card.appendChild(additionalImages);
+                    }
+    
+                    newsContainer.appendChild(card);
+                    cardIdCounter++;
+    
+                    card.querySelector('.delete-btn').addEventListener('click', function() {
+                        const cardId = this.getAttribute('data-id');
+                        const cardToDelete = document.querySelector(`.news-card[data-id="${cardId}"]`);
+                        if (cardToDelete) {
+                            cardToDelete.remove();
+                        }
+                    });
+    
+                    card.querySelector('.details-btn').addEventListener('click', function() {
+                        const cardId = this.getAttribute('data-id');
+                        // Перенаправление на страницу с новостью (пока просто алерт)
+                        alert(`Перейти к новости ID: ${cardId}`);
+                    });
+                }
+    
+                // Проверяем, есть ли токен в локальном хранилище
+                const token = localStorage.getItem('token');
+                if (token) {
+                    fetch('/api/Users', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const user = data[0]; // Предполагается, что возвращается массив пользователей
                         loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
                         loginButton.href = "#";
-                        loginButton.onclick = () => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('user');
-                            window.location.reload();
-                        };
-                    }
+                        loginButton.addEventListener('click', function() {
+                            localStorage.removeItem('token'); // Удаление токена при выходе
+                            window.location.reload(); // Перезагрузка страницы
+                        });
+    
+                        // Если пользователь администратор, отображаем кнопку удаления
+                        if (user.RoleID === 1) {
+                            document.querySelectorAll('.news-card').forEach(card => {
+                                card.classList.add('admin');
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
                 }
             });
         </script>
-        
-
-        <script src="createnews.js"></script>   
+        <!-- <script src="createnews.js"></script> -->
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>
         <script src="Js/ForAbout.js"></script>

@@ -2,7 +2,6 @@
     <html lang="ru">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ПЛК Транзит</title>
         <link rel="stylesheet" href="StyleMain.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -159,36 +158,34 @@
         <section id="news" class="news">
             <h2>Новости</h2>
             <div class="news-container">
-                <!-- Карточки новостей будут добавляться сюда -->
+                <!-- Сюда будут добавляться новые карточки -->
             </div>
-          </section>
-      
-          <!-- Кнопка для открытия модального окна -->
-          <button id="add-news-btn">Добавить новость</button>
-      
-          <!-- Модальное окно -->
-          <div id="news-modal" class="modal">
+            <button id="add-news-btn">Добавить новость</button>
+        </section>
+        
+        <!-- Модальное окно для ввода данных новости -->
+        <div id="news-modal" style="display: none;">
+            <h3>Создать новость</h3>
+            <form id="news-form">
+                <input type="text" id="news-title" placeholder="Заголовок" required>
+                <input type="date" id="news-date" required>
+                <textarea id="news-description" placeholder="Описание" required></textarea>
+                <input type="file" id="news-image" accept="image/*" required>
+                <button type="submit">Создать новость</button>
+            </form>
+        </div>
+        
+        
+        <!-- Модальное окно -->
+        <div id="modal" class="modal">
             <div class="modal-content">
-              <span class="close-btn">&times;</span>
-              <h3>Добавить новость</h3>
-              <form id="news-form">
-                <label for="news-title">Название:</label>
-                <input type="text" id="news-title" name="title" required />
-              
-                <label for="news-date">Дата:</label>  <!-- Добавлено поле даты -->
-                <input type="date" id="news-date" name="date" required />
-              
-                <label for="news-description">Описание:</label>
-                <textarea id="news-description" name="description" required></textarea>
-              
-                <label for="news-images">Загрузить изображения (до 5 штук):</label>
-                <input type="file" id="news-images" name="images" accept="image/*" multiple />
-              
-                <button type="submit">Добавить</button>
-              </form>
-              
+                <span class="close">&times;</span>
+                <div id="modal-body"></div>
             </div>
-          </div>       
+        </div>
+        
+        
+        
 
         <footer id="contacts">
             <div class="footer-content">
@@ -211,7 +208,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const loginButton = document.getElementById('loginButton');
-            
+        
                 if (loginButton) {
                     const user = JSON.parse(localStorage.getItem('user'));
                     if (user) {
@@ -226,9 +223,7 @@
                 }
             });
         </script>
-        
-
-        <script src="createnews.js"></script>   
+        <script src="createnews.js"></script>
         <script src="Js/slider.js"></script>
         <script src="Js/schetchi.js"></script>
         <script src="Js/ForAbout.js"></script>

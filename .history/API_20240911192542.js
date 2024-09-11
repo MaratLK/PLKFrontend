@@ -64,29 +64,24 @@ function showLoginMessage(userName) {
 }
 
 // Функция для обновления интерфейса в зависимости от состояния пользователя
-// Функция для обновления интерфейса в зависимости от состояния пользователя
 function updateUserInterface(user) {
-    const loginButton = document.getElementById('loginButton');  // Селектор кнопки "Войти"
-    
-    if (!loginButton) {
-        console.error('Login button not found');
-        return;  // Прекратить выполнение функции, если элемент не найден
-    }
+  const loginButton = document.getElementById('loginButton');
+  
+  if (!loginButton) {
+      console.error('Login button not found');
+      return; // Прекратить выполнение функции, если элемент не найден
+  }
 
-    if (user) {
-        // Если пользователь найден, обновляем кнопку на имя пользователя
-        loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;  // Используем имя пользователя
-        loginButton.href = "#";  // При необходимости можно задать другой маршрут
-        loginButton.onclick = logout;  // Обрабатываем выход
-    } else {
-        // Если пользователь не найден, показываем стандартную кнопку входа
-        loginButton.innerHTML = `<i class="fas fa-user"></i> Войти`;
-        loginButton.href = "LogReg.html";  // Переход к форме входа
-        loginButton.onclick = null;  // Сброс обработчика выхода
-    }
+  if (user) {
+      loginButton.innerHTML = `<i class="fas fa-user"></i> ${user.firstName}`;
+      loginButton.href = "#";
+      loginButton.onclick = logout;
+  } else {
+      loginButton.innerHTML = `<i class="fas fa-user"></i> Войти`;
+      loginButton.href = "LogReg.html";
+      loginButton.onclick = null;
+  }
 }
-
-
 
 async function register() {
   const firstName = document.getElementById('firstName').value;
@@ -135,11 +130,10 @@ async function register() {
 
 // Функция для выхода пользователя
 function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    updateUserInterface(null);  // Сброс интерфейса на стандартный вид
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  updateUserInterface(null);
 }
-
 
 // Функция для обновления интерфейса в зависимости от состояния пользователя
 function updateUserInterface(user) {
@@ -176,19 +170,19 @@ function goBack() {
   window.location.href = 'index.html'; 
 }
 
+// Обработчик DOMContentLoaded для обновления интерфейса при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
-    const loginButton = document.getElementById('loginButton');  // Селектор кнопки "Войти"
-
-    if (loginButton) {
-        const user = JSON.parse(localStorage.getItem('user'));  // Проверяем, есть ли данные о пользователе в localStorage
-        if (user) {
-            console.log('Loaded user:', user);  // Если пользователь найден, выводим его данные в консоль
-            updateUserInterface(user);  // Обновляем интерфейс
-        } else {
-            console.log('No user data found in localStorage');
-            updateUserInterface(null);  // Если данных нет, сбрасываем интерфейс
-        }
-    } else {
-        console.log('Login button not found on this page. Skipping updateUserInterface.');
-    }
+  const loginButton = document.getElementById('loginButton');
+  
+  if (loginButton) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+          console.log('Loaded user:', user);
+      } else {
+          console.log('No user data found in localStorage');
+      }
+      updateUserInterface(user);
+  } else {
+      console.log('Login button not found on this page. Skipping updateUserInterface.');
+  }
 });

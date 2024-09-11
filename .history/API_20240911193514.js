@@ -66,8 +66,8 @@ function showLoginMessage(userName) {
 // Функция для обновления интерфейса в зависимости от состояния пользователя
 // Функция для обновления интерфейса в зависимости от состояния пользователя
 function updateUserInterface(user) {
-    const loginButton = document.getElementById('loginButton');  // Селектор кнопки "Войти"
-    
+    const loginButton = document.getElementById('loginButton');  // Здесь нужно добавить ID кнопки "Войти"
+  
     if (!loginButton) {
         console.error('Login button not found');
         return;  // Прекратить выполнение функции, если элемент не найден
@@ -85,7 +85,6 @@ function updateUserInterface(user) {
         loginButton.onclick = null;  // Сброс обработчика выхода
     }
 }
-
 
 
 async function register() {
@@ -176,6 +175,7 @@ function goBack() {
   window.location.href = 'index.html'; 
 }
 
+// Обработчик DOMContentLoaded для обновления интерфейса при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     const loginButton = document.getElementById('loginButton');  // Селектор кнопки "Войти"
 
