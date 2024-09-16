@@ -20,14 +20,17 @@ async function login() {
         if (response.ok) {
             const result = await response.json();
 
-            // Проверяем, есть ли токен
-            if (result.token) {
-                // Сохраняем токен в localStorage
-                localStorage.setItem('token', result.token);
-                console.log('Token saved:', result.token);
+            // Проверяем, что роль пользователя есть в ответе
+            if (result.user && result.user.role) {
+                // Сохраняем данные о пользователе, включая его роль
+                localStorage.setItem('user', JSON.stringify({
+                    userID: result.user.userID,
+                    firstName: result.user.firstName,
+                    lastName: result.user.lastName,
+                    email: result.user.email,
+                    role: result.user.role // Добавляем роль
+                }));
 
-                // Сохраняем информацию о пользователе
-                localStorage.setItem('user', JSON.stringify(result.user));
                 console.log('User data saved:', result.user);
 
                 // Обновляем интерфейс для пользователя
@@ -37,21 +40,22 @@ async function login() {
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 2000);
+
             } else {
-                alert('Ошибка: не получен токен.');
+                console.error('Login failed: Role is missing in response');
+                alert('Login failed: Role is missing in response');
             }
 
         } else {
             const errorText = await response.text();
-            console.error('Ошибка при авторизации:', response.status, errorText);
-            alert('Ошибка при авторизации: ' + errorText);
+            console.error('Error logging in:', response.status, errorText);
+            alert('Login failed: ' + errorText);
         }
     } catch (error) {
-        console.error('Ошибка:', error);
-        alert('Ошибка при авторизации: ' + error.message);
+        console.error('Error:', error);
+        alert('Login failed: ' + error.message);
     }
 }
-
 
 
 // Функция для отображения сообщения о успешном входе
