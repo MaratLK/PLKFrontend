@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const description = document.getElementById("news-description").value;
         const images = document.getElementById("news-images").files;
 
+       
         formData.append("title", title);
         formData.append("date", date);
         formData.append("content", description);
@@ -83,15 +84,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Получаем ID пользователя из localStorage
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            formData.append("userID", user.userID);  // Добавляем userID
+if (user) {
+            formData.append("userID", user.userID);
         } else {
             alert("Ошибка: Пользователь не найден.");
             return;
         }
-
-        // Логирование formData перед отправкой
         console.log([...formData]);
+
+        // Добавляем userID в FormData
+        formData.append("userID", user.userID);
 
         // Проверка наличия токена
         const token = localStorage.getItem('token');

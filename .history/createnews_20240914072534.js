@@ -63,13 +63,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const formData = new FormData();
-
         const title = document.getElementById("news-title").value;
         const date = document.getElementById("news-date").value;
         const description = document.getElementById("news-description").value;
         const images = document.getElementById("news-images").files;
 
+        const formData = new FormData();
         formData.append("title", title);
         formData.append("date", date);
         formData.append("content", description);
@@ -83,15 +82,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Получаем ID пользователя из localStorage
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            formData.append("userID", user.userID);  // Добавляем userID
-        } else {
-            alert("Ошибка: Пользователь не найден.");
+        const userID = user ? user.userID : null;
+        if (!userID) {
+            alert("Ошибка: не удалось получить ID пользователя.");
             return;
         }
 
-        // Логирование formData перед отправкой
-        console.log([...formData]);
+        // Добавляем userID в FormData
+        formData.append("userID", userID);
 
         // Проверка наличия токена
         const token = localStorage.getItem('token');

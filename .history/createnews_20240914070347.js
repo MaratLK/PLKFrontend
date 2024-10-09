@@ -63,13 +63,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const formData = new FormData();
-
         const title = document.getElementById("news-title").value;
         const date = document.getElementById("news-date").value;
         const description = document.getElementById("news-description").value;
         const images = document.getElementById("news-images").files;
 
+        const formData = new FormData();
         formData.append("title", title);
         formData.append("date", date);
         formData.append("content", description);
@@ -81,22 +80,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // Получаем ID пользователя из localStorage
+        // Добавляем пользователя
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            formData.append("userID", user.userID);  // Добавляем userID
-        } else {
-            alert("Ошибка: Пользователь не найден.");
+        const userId = user ? user.userID : null;
+        if (!userId) {
+            alert("Ошибка: пользователь не найден.");
             return;
         }
-
-        // Логирование formData перед отправкой
-        console.log([...formData]);
+        formData.append("user", userId);
 
         // Проверка наличия токена
         const token = localStorage.getItem('token');
         if (!token) {
-            alert("Ошибка: отсутствует токен.");
+            alert("Ошибка: отсутствует токен. Авторизуйтесь заново.");
             window.location.href = '/login';  // Перенаправление на страницу входа
             return;
         }
@@ -127,3 +123,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 });
+s
