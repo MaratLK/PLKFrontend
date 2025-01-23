@@ -9,7 +9,7 @@ async function login() {
     };
 
     try {
-        const response = await fetch('https://localhost:7268/api/Users/login', {
+        const response = await fetch('http://localhost:5169/api/Users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -87,8 +87,6 @@ function updateUserInterface(user) {
     }
 }
 
-
-
 async function register() {
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
@@ -109,7 +107,7 @@ async function register() {
   };
 
   try {
-      const response = await fetch('https://localhost:7268/api/Users/register', {
+      const response = await fetch('http://localhost:5169/api/Users/register', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'

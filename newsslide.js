@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const modal = document.getElementById('news-modal');
     const closeBtn = document.querySelector('.close-btn');
     const form = document.getElementById('news-form');
-    const API_URL = 'https://localhost:7268/api/News';
+    const API_URL = 'http://localhost:5169/api/News';
     let currentIndex = 0;
     let newsList = [];
     let editMode = false;
@@ -61,28 +61,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentEditNewsID = null;
     }
 
-    // Получение новостей с сервера
     async function fetchNews() {
         try {
             const response = await fetch(API_URL);
             if (response.ok) {
                 const result = await response.json();
+                console.log('Новости успешно загружены:', result);
+    
                 newsList = result.$values || result;
-
-                // Сортируем новости по дате, чтобы самая актуальная была первой
+    
+                if (!newsList || newsList.length === 0) {
+                    console.warn('Новости отсутствуют.');
+                    newsContainer.innerHTML = '<p>Новости отсутствуют.</p>';
+                    return;
+                }
+    
+                // Сортируем новости по дате
                 newsList.sort((a, b) => {
                     let dateA = new Date(a.datePublished);
                     let dateB = new Date(b.datePublished);
                     return dateB.getTime() - dateA.getTime();
                 });
-
+    
                 currentIndex = 0;
                 loadNewsSlides();
             } else {
-                console.error('Ошибка при загрузке новостей:', response.statusText);
+                console.error('Ошибка при загрузке новостей:', response.status, response.statusText);
             }
         } catch (error) {
-            console.error('Ошибка при подключении к серверу:', error);
+            console.error('Ошибка подключения к серверу:', error);
         }
     }
 
@@ -93,6 +100,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function updateSlider() {
+        console.log('Отображение новостей:', newsList);
+
+    if (!newsList || newsList.length === 0) {
+        newsContainer.innerHTML = '<p>Нет доступных новостей.</p>';
+        return;
+    }
         newsContainer.innerHTML = '';
         let visibleNews = newsList.slice(currentIndex, currentIndex + 3);
         visibleNews.forEach((news, index) => {

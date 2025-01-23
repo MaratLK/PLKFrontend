@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const API_URL = `https://localhost:7268/api/News/${newsID}`;
-    const BASE_URL = 'https://localhost:7268'; // Базовый URL для получения изображений
+    const API_URL = `https://localhost:5169/api/News/${newsID}`;
+    const BASE_URL = 'https://localhost:5169'; // Базовый URL для получения изображений
 
     try {
         const response = await fetch(API_URL);
